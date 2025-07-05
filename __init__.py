@@ -158,12 +158,38 @@ def generate_kanji_details(
 
         if matching_entries:
             lines.append("<hr class='word-separator'><ul>")
+            
             for entry in matching_entries:
-                ruby = build_ruby(entry["term"], entry.get("reading", ""))
+                term = entry["term"]
+                ruby = build_ruby(term, entry.get("reading", ""))
                 freq = entry.get("frequency", "N/A")
                 defs = entry.get("definitions", "").strip()
                 definition_html = f"<div class='definition'>{defs}</div>" if defs else ""
-                lines.append(f"<li>{ruby} <small>({freq})</small>{definition_html}</li>")
+
+                # Extract kanji from term and add their meanings
+                term_kanji = [k for k in term if KANJI_RE.match(k)]
+                kanji_meaning_lines = []
+
+                for k in term_kanji:
+                    summary = kanji_summary.get(k)
+                    if summary:
+                        meaning = summary.get("meaning", "").strip()
+                        if meaning:
+                            kanji_meaning_lines.append(f"<li><strong>{k}</strong>: {meaning}</li>")
+
+                kanji_details_html = ""
+                if kanji_meaning_lines:
+                    kanji_details_html = f"""
+                    <details>
+                        <summary>Kanji meanings</summary>
+                        <ul>
+                            {''.join(kanji_meaning_lines)}
+                        </ul>
+                    </details>
+                    """
+
+                lines.append(f"<li>{ruby} <small>({freq})</small>{definition_html}{kanji_details_html}</li>")
+            
             lines.append("</ul>")
 
         lines.append("</div>")  # end popup-scroll
