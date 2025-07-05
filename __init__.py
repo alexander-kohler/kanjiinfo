@@ -159,7 +159,7 @@ def generate_kanji_details(
         if matching_entries:
             lines.append("<hr class='word-separator'><ul>")
             
-            for entry in matching_entries:
+            for i, entry in enumerate(matching_entries):
                 term = entry["term"]
                 ruby = build_ruby(term, entry.get("reading", ""))
                 freq = entry.get("frequency", "N/A")
@@ -179,16 +179,19 @@ def generate_kanji_details(
 
                 kanji_details_html = ""
                 if kanji_meaning_lines:
+                    details_id = f"details-{term}-{i}"
                     kanji_details_html = f"""
-                    <details>
-                        <summary>Kanji meanings</summary>
+                    <span class="kanji-details-toggle" onclick="document.getElementById('{details_id}').classList.toggle('hidden')">[+]</span>
+                    <div id="{details_id}" class="kanji-details hidden">
                         <ul>
                             {''.join(kanji_meaning_lines)}
                         </ul>
-                    </details>
+                    </div>
                     """
 
-                lines.append(f"<li>{ruby} <small>({freq})</small>{definition_html}{kanji_details_html}</li>")
+                # Now insert the [+] AFTER the frequency
+                lines.append(f"<li>{ruby} <small>({freq})</small> {kanji_details_html}{definition_html}</li>")
+
             
             lines.append("</ul>")
 
@@ -209,26 +212,27 @@ def process_japanese_deck():
     field_expression = "Expression"
     field_kanji_info = "KanjiInfo"
 
-    mw.progress.start(label="Updating Kanji Info...", immediate=True)
+    frequency_data = load_frequency_data()
+    kanji_summary = load_kanji_summary()
+    kanji_index = build_kanji_index(frequency_data)
+
+    col = mw.col
+    deck = col.decks.by_name(deck_name)
+
+    if not deck:
+        showInfo(f"Deck '{deck_name}' not found.")
+        return
+
+    nids = col.find_notes(f'deck:"{deck_name}"')
+    total = len(nids)
+    updated_count = 0
+
+    progress = ProgressManager(mw)
+    progress.start(label="Updating Kanji Info...", max=total)
 
     try:
-        col = mw.col
-        deck = col.decks.by_name(deck_name)
-
-        if not deck:
-            showInfo(f"Deck '{deck_name}' not found.")
-            return
-
-        frequency_data = load_frequency_data()
-        kanji_summary = load_kanji_summary()
-        kanji_index = build_kanji_index(frequency_data)
-
-        nids = col.find_notes(f'deck:"{deck_name}"')
-        total = len(nids)
-        updated_count = 0
-
         for i, nid in enumerate(nids):
-            mw.progress.update(value=i, max=total)
+            progress.update(value=i)
             note = col.get_note(nid)
 
             expr = note[field_expression] if field_expression in note else ""
@@ -236,7 +240,6 @@ def process_japanese_deck():
             if not kanji_chars:
                 continue
 
-            # Generate clickable kanji version of expression
             highlighted_expr = ""
             for char in expr:
                 if KANJI_RE.match(char):
@@ -244,12 +247,10 @@ def process_japanese_deck():
                 else:
                     highlighted_expr += char
 
-            # Generate kanji info popup blocks
             popup_html = generate_kanji_details(
                 kanji_chars, kanji_index, kanji_summary, top_n_words, max_word_frequency
             )
 
-            # Combine expression + hidden popups
             if field_kanji_info in note:
                 note[field_kanji_info] = f"""
                 <div class='kanji-popup'>
@@ -259,11 +260,10 @@ def process_japanese_deck():
                 """
                 col.update_note(note)
                 updated_count += 1
-
-
-        showInfo(f"Updated {updated_count} notes with kanji frequency info.")
     finally:
-        mw.progress.finish()
+        progress.finish()
+
+    showInfo(f"Updated {updated_count} notes with kanji frequency info.")
 
 
 
