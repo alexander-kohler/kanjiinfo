@@ -1,0 +1,1 @@
+Kanji Info Popup
