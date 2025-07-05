@@ -1,0 +1,20 @@
+<script>
+  function hideKanjiPopup() {
+    document
+      .querySelectorAll(".kanji-popup-content")
+      .forEach((p) => (p.style.display = "none"));
+  }
+
+  function showKanjiPopup(char) {
+    hideKanjiPopup();
+    const popup = document.getElementById("popup-" + char);
+    if (popup) popup.style.display = "flex";
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("nested-kanji")) {
+      const char = e.target.dataset.kanji;
+      showKanjiPopup(char);
+    }
+  });
+</script>

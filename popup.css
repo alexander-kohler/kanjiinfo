@@ -991,7 +991,7 @@ ol
 }
 
 .kanji-popup .popup-scroll {
-  flex: 1 1 auto; 
+  flex: 1 1 auto;
   overflow-y: auto;
   padding: 1em;
   min-height: 0;
@@ -1024,7 +1024,7 @@ ol
 }
 
 .kanji-popup .kanji-popup-content td.label {
-  color: #737373; 
+  color: #737373;
   padding-right: 0.8em;
   vertical-align: top;
   white-space: nowrap;
@@ -1058,7 +1058,7 @@ ol
 }
 
 .kanji-popup .kanji-popup-content ul {
-  list-style: none; 
+  list-style: none;
   padding-left: 0;
   margin: 0.5em 0;
 }
@@ -1112,4 +1112,19 @@ ol
 
 .kanji-popup ruby {
   ruby-position: over;
+}
+
+.kanji-details {
+  margin-top: 0.3em;
+  font-size: 0.9em;
+  padding-left: 1em;
+}
+.kanji-details.hidden {
+  display: none;
+}
+.kanji-details-toggle {
+  cursor: pointer;
+  margin-left: 0.5em;
+  font-weight: bold;
+  color: #555;
 }
