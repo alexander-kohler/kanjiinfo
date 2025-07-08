@@ -1,4 +1,7 @@
 {
-  "number_of_examples": 5,
-  "example_frequency_cutoff": 100000
+  "number_of_example_vocab": 5,
+  "example_vocab_frequency_cutoff": 100000,
+  "expression": "Expression",
+  "destination_field_name": "KanjiInfo",
+  "deck_to_process": "Mining"
 }
