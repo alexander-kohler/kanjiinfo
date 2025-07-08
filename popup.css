@@ -954,7 +954,16 @@ ol
 
 /* --------------------------------------------------------- Kanji Info ---------------------------------- */
 
-/* === Expression Clickable Kanji === */
+/* === Kanji Popup Root Container === */
+.kanji-popup {
+  position: relative;
+  z-index: 9999;
+  color: #eee;
+  font-size: 0.95em;
+  line-height: 1.5em;
+}
+
+/* === Clickable Kanji in Expression === */
 .kanji-popup .kanji-click {
   cursor: pointer;
   color: #fff;
@@ -962,20 +971,12 @@ ol
   padding: 0 2px;
   transition: background 0.2s;
 }
-
 .kanji-popup .kanji-click:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* === Popup Container === */
-
-.kanji-popup {
-  position: relative;
-  z-index: 9999;
-}
-
+/* === Popup Panel === */
 .kanji-popup .kanji-popup-content {
-  z-index: 9999;
   position: fixed;
   top: 5%;
   left: 50%;
@@ -983,27 +984,24 @@ ol
   width: 90%;
   max-width: 600px;
   max-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
   background: #222;
   border: 1px solid #555;
-  z-index: 999;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  color: #eee;
-  font-size: 0.95em;
-  line-height: 1.5em;
   border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 10000;
 }
 
+/* === Scrollable Content === */
 .kanji-popup .popup-scroll {
   flex: 1 1 auto;
   overflow-y: auto;
   padding: 1em;
-  min-height: 0;
 }
 
+/* === Sticky Footer (Close Button) === */
 .kanji-popup .popup-footer {
   flex-shrink: 0;
   background: #222;
@@ -1011,210 +1009,125 @@ ol
   text-align: center;
   position: sticky;
   bottom: 0;
+  padding: 0.75em 1em;
+}
+.kanji-popup .popup-close {
+  padding: 0.5em 1.2em;
+  font-size: 1em;
+  background: #444;
+  color: #eee;
+  border: 1px solid #666;
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 80px;
+  appearance: none;
+  margin: 0;
+}
+.kanji-popup .popup-close:hover {
+  background: #666;
 }
 
-/* === Table Styling === */
-.kanji-popup .kanji-popup-content table {
+/* === Headline === */
+.kanji-popup h2 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #ffcc66;
+}
+
+/* === Table Layout === */
+.kanji-popup table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1em;
 }
-
-.kanji-popup .meaning-primary {
-  font-weight: 600;
-  color: #eee;
-}
-
-.kanji-popup .meaning-secondary {
-  color: #bbb;
-  font-weight: 400;
-}
-
-.kanji-popup .kanji-popup-content td.label {
+.kanji-popup td.label {
   color: #737373;
   padding-right: 0.8em;
   vertical-align: top;
   white-space: nowrap;
   text-align: right;
 }
-
-.kanji-popup .kanji-popup-content td.value {
+.kanji-popup td.value {
   color: #eee;
   text-align: left;
 }
 
-/* === Popup Headline === */
-.kanji-popup .kanji-popup-content h2 {
-  margin-top: 0;
-  font-size: 1.4em;
-  color: #ffcc66;
+/* === Meaning Highlighting === */
+.kanji-popup .meaning-primary {
+  font-weight: 600;
+  color: #eee;
+}
+.kanji-popup .meaning-secondary {
+  color: #bbb;
+  font-weight: 400;
 }
 
 /* === Word List === */
-.kanji-popup-content .word-separator {
+.kanji-popup .word-separator {
   border: none;
   border-top: 1px solid #444;
   margin: 1em 0 0.5em 0;
 }
-
-.kanji-popup-content .definition {
+.kanji-popup ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5em 0;
+}
+.kanji-popup li {
+  margin-bottom: 0.8em;
+}
+.kanji-popup li > ruby {
+  font-size: 1.15em;
+  margin-right: 0.5em;
+}
+.kanji-popup small {
+  color: #737373;
+  font-size: 90%;
+  margin-left: 0.3em;
+}
+.kanji-popup .definition {
   font-size: 85%;
   color: #ccc;
   margin-top: 2px;
   margin-left: 0.5em;
 }
 
-.kanji-popup .kanji-popup-content ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0.5em 0;
-}
-
-.kanji-popup .kanji-popup-content li {
-  margin-bottom: 0.8em;
-}
-
-.kanji-popup .kanji-popup-content li > ruby {
-  font-size: 1.15em;
-  margin-right: 0.5em;
-}
-
-.kanji-popup .kanji-popup-content small {
-  color: #737373;
-  font-size: 90%;
-  margin-left: 0.3em;
-}
-
-.kanji-popup .definition {
-  font-size: 85%;
-  color: #ccc;
-}
-
-/* === Close Button === */
-.kanji-popup .popup-close {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  padding: 0.4em 1em;
-  background: #444;
-  color: #eee;
-  border: 1px solid #666;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 90%;
-}
-
-.kanji-popup .popup-close:hover {
-  background: #666;
-}
-
 /* === Ruby Furigana Hover === */
+.kanji-popup ruby {
+  ruby-position: over;
+}
 .kanji-popup ruby rt {
   visibility: hidden;
   font-size: 60%;
   color: #eee;
 }
-
 .kanji-popup ruby:hover rt {
   visibility: visible;
 }
 
-.kanji-popup ruby {
-  ruby-position: over;
-}
-
-.kanji-details {
+/* === Kanji Meaning Details Toggle === */
+.kanji-popup .kanji-details {
   margin-top: 0.3em;
   font-size: 0.9em;
   padding-left: 1em;
 }
-.kanji-details.hidden {
+.kanji-popup .kanji-details.hidden {
   display: none;
 }
-.kanji-details-toggle {
+.kanji-popup .kanji-details-toggle {
   cursor: pointer;
   margin-left: 0.5em;
   font-weight: bold;
   color: #555;
 }
 
-.kanji-story summary {
-  cursor: pointer;
-  font-weight: bold;
-  margin: 4px 0;
-}
-.story-content {
-  margin-top: 4px;
-  white-space: pre-wrap;
-}
-.kanji-popup-content td.value details {
-  display: block;
-}
-
-.story-toggle {
-  cursor: pointer;
-  font-weight: bold;
-  margin-right: 6px;
-  display: inline-block;
-  width: 1.5em;
-  color: #ccc;
-}
-
-.story-label {
-  font-weight: bold;
-  display: inline-block;
-  margin-left: 0.5em;
-  color: #ccc;
-}
-
-.story-body {
-  margin-left: 1.5em;
-  margin-top: 4px;
-  white-space: pre-wrap;
-}
-
-.hidden {
-  display: none;
-}
-
-.story-container {
-  margin-top: 0.25em;
-}
-
-.story-header {
-  cursor: pointer;
-  /* display: flex;
-    align-items: center; */
-  gap: 0.5em;
-  font-weight: bold;
-  color: #ccc;
-}
-
-.story-toggle {
-  display: inline-block;
-  width: 1.2em;
-}
-
-.story-label {
-  font-weight: bold;
-}
-
-.story-body {
-  margin-left: 1.5em;
-  margin-top: 0.5em;
-  white-space: pre-wrap;
-  color: #bbb;
-}
-
-.hidden {
-  display: none;
-}
-
-.story-container {
+/* === Story Toggle === */
+.kanji-popup .story-container {
   display: inline-block;
   width: 100%;
+  margin-top: 0.25em;
 }
-
-.story-header {
+.kanji-popup .story-header {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -1223,25 +1136,22 @@ ol
   color: #ccc;
   white-space: nowrap;
 }
-
-.story-toggle {
+.kanji-popup .story-toggle {
   width: 1em;
   text-align: center;
+  display: inline-block;
+  font-weight: bold;
+  color: #ccc;
+}
+.kanji-popup .story-label {
   font-weight: bold;
   display: inline-block;
 }
-
-.story-label {
-  font-weight: bold;
-  display: inline-block;
-}
-
-.story-body {
+.kanji-popup .story-body {
   margin: 0.4em 0 0 1.4em;
   white-space: pre-wrap;
   color: #bbb;
 }
-
-.hidden {
+.kanji-popup .hidden {
   display: none;
 }
