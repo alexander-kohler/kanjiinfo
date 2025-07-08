@@ -24,4 +24,19 @@
     const isHidden = body.classList.toggle("hidden");
     toggle.textContent = isHidden ? "[+]" : "[−]";
   }
+
+  function toggleKanjiDetails(details_id) {
+    const body = document.getElementById(details_id);
+    const toggle = document.getElementById("toggle-" + details_id);
+    const isHidden = body.classList.toggle("hidden");
+    toggle.textContent = isHidden ? "[+]" : "[−]";
+  }
+
+  function showLargePopup(el, kanji) {
+    console.log("clicked:", kanji);
+    var popup = document.getElementById("stroke-order-popup-" + kanji);
+    if (!popup) return;
+    popup.innerText = kanji;
+    popup.style.display = "block";
+  }
 </script>
