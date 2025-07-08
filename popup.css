@@ -139,7 +139,7 @@ html.mobile {
   display: flex;
   align-items: stretch;
   flex-direction: column;
-  min-height: calc(100vh - 40px);
+  /* min-height: calc(100vh - 40px); */
   font-family: var(--font-serif);
   font-size: var(--main-font-size);
   text-align: center;
@@ -968,14 +968,21 @@ ol
 }
 
 /* === Popup Container === */
+
+.kanji-popup {
+  position: relative;
+  z-index: 9999;
+}
+
 .kanji-popup .kanji-popup-content {
+  z-index: 9999;
   position: fixed;
-  top: 10%;
+  top: 5%;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
   max-width: 600px;
-  max-height: 80vh;
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -1086,6 +1093,7 @@ ol
 /* === Close Button === */
 .kanji-popup .popup-close {
   margin-top: 1em;
+  margin-bottom: 1em;
   padding: 0.4em 1em;
   background: #444;
   color: #eee;
@@ -1127,4 +1135,113 @@ ol
   margin-left: 0.5em;
   font-weight: bold;
   color: #555;
+}
+
+.kanji-story summary {
+  cursor: pointer;
+  font-weight: bold;
+  margin: 4px 0;
+}
+.story-content {
+  margin-top: 4px;
+  white-space: pre-wrap;
+}
+.kanji-popup-content td.value details {
+  display: block;
+}
+
+.story-toggle {
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 6px;
+  display: inline-block;
+  width: 1.5em;
+  color: #ccc;
+}
+
+.story-label {
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 0.5em;
+  color: #ccc;
+}
+
+.story-body {
+  margin-left: 1.5em;
+  margin-top: 4px;
+  white-space: pre-wrap;
+}
+
+.hidden {
+  display: none;
+}
+
+.story-container {
+  margin-top: 0.25em;
+}
+
+.story-header {
+  cursor: pointer;
+  /* display: flex;
+    align-items: center; */
+  gap: 0.5em;
+  font-weight: bold;
+  color: #ccc;
+}
+
+.story-toggle {
+  display: inline-block;
+  width: 1.2em;
+}
+
+.story-label {
+  font-weight: bold;
+}
+
+.story-body {
+  margin-left: 1.5em;
+  margin-top: 0.5em;
+  white-space: pre-wrap;
+  color: #bbb;
+}
+
+.hidden {
+  display: none;
+}
+
+.story-container {
+  display: inline-block;
+  width: 100%;
+}
+
+.story-header {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-weight: bold;
+  color: #ccc;
+  white-space: nowrap;
+}
+
+.story-toggle {
+  width: 1em;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.story-label {
+  font-weight: bold;
+  display: inline-block;
+}
+
+.story-body {
+  margin: 0.4em 0 0 1.4em;
+  white-space: pre-wrap;
+  color: #bbb;
+}
+
+.hidden {
+  display: none;
 }

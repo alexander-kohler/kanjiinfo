@@ -51,7 +51,7 @@ def load_frequency_data() -> FrequencyData:
 
 def load_kanji_summary() -> Dict[str, dict]:
     addon_dir = os.path.dirname(__file__)
-    csv_path = os.path.join(addon_dir, "data", "kanji_summary.csv")
+    csv_path = os.path.join(addon_dir, "data", "kanji_summary_stories.csv")
     kanji_info = {}
 
     with open(csv_path, encoding="utf-8") as f:
@@ -66,9 +66,13 @@ def load_kanji_summary() -> Dict[str, dict]:
                 "jlpt": row.get("jlpt", "").strip(),
                 "meaning": row.get("meaning", "").strip(),
                 "frequency": row.get("frequency", "").strip(),
+                "keyword": row.get("keyword", "").strip(),
+                "story1": row.get("story1", "").strip(),
+                "story2": row.get("story2", "").strip(),
             }
 
     return kanji_info
+
 
 
 def build_kanji_index(frequency_data: FrequencyData) -> Dict[str, List[FrequencyEntry]]:
@@ -88,6 +92,18 @@ def build_ruby(term: str, reading: str) -> str:
     if not term or not reading:
         return f"{term} <span class='reading-fallback'>[{reading}]</span>"
     return f"<ruby>{term}<rt>{reading}</rt></ruby>"
+
+def format_story(label: str, content: str, story_id: str) -> str:
+    return f"""
+    <div class='story-container'>
+        <div class='story-header' onclick="toggleStory('{story_id}')">
+            <span class='story-toggle' id='toggle-{story_id}'>[+]</span>
+        </div>
+        <div id='{story_id}' class='story-body hidden'>{content}</div>
+    </div>
+    """
+#  <span class='story-label'>{label}</span>
+
 
 def generate_kanji_details(
     kanji_chars,
@@ -152,6 +168,17 @@ def generate_kanji_details(
 
             if summary.get("frequency"):
                 row("Frequency", summary["frequency"])
+
+            if summary.get("keyword"):
+                row("Keyword", summary["keyword"])
+
+            if summary.get("story1"):
+                row("Story 1", format_story("Story 1", summary["story1"], f"story1-{kanji}"))
+
+            if summary.get("story2"):
+                row("Story 2", format_story("Story 2", summary["story2"], f"story2-{kanji}"))
+
+
 
             lines.append("</table>")
 

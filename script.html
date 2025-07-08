@@ -17,4 +17,11 @@
       showKanjiPopup(char);
     }
   });
+
+  function toggleStory(id) {
+    const body = document.getElementById(id);
+    const toggle = document.getElementById("toggle-" + id);
+    const isHidden = body.classList.toggle("hidden");
+    toggle.textContent = isHidden ? "[+]" : "[−]";
+  }
 </script>
