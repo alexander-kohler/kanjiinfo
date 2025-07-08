@@ -11,8 +11,12 @@ from anki.notes import Note
 from aqt.progress import ProgressManager
 
 config = mw.addonManager.getConfig(__name__)
-top_n_words = config.get("number_of_examples", 5)
-max_word_frequency = config.get("example_frequency_cutoff", 100000)
+top_n_words = config.get("number_of_example_vocab", 5)
+max_word_frequency = config.get("example_vocab_frequency_cutoff", 100000)
+expressionFieldName = config.get("field_to_process", "Expression")
+destinationFieldName = config.get("destination_field_name", "KanjiInfo")
+deckToProcess = config.get("deck_to_process", "Mining")
+
 
 class FrequencyEntry(TypedDict):
     term: str
@@ -137,46 +141,42 @@ def generate_kanji_details(
         lines.append(f"<div class='kanji-popup-content' id='popup-{kanji}' style='display:none;'>")
         lines.append("<div class='popup-scroll'>")  # start scroll container
 
-        lines.append(f"<h2>{kanji}</h2>")
+        lines.append(f"""<h2 onclick="showLargePopup(this, '{kanji}')">{kanji}</h2>""")
+        lines.append(f"""<div id="stroke-order-popup-{kanji}" class="stroke-order-popup" onclick="this.style.display='none'"></div>""")
+
 
         if summary:
             lines.append("<table>")
 
-            def row(label, val):
+            def appendRow(label, val):
                 lines.append(f"<tr><td class='label'>{label}</td><td class='value'>{val}</td></tr>")
 
             # NEW ORDER: Meaning → Onyomi → Kunyomi → JLPT → Frequency
-            if summary.get("meaning"):
-                meanings = summary["meaning"].split(";")
-                if meanings:
-                    first = f"<span class='meaning-primary'>{meanings[0].strip()}</span>"
-                    others = "; ".join(m.strip() for m in meanings[1:])
-                    if others:
-                        rest = f"<span class='meaning-secondary'>; {others}</span>"
-                    else:
-                        rest = ""
-                    row("Meaning", first + rest)
-
-            if summary.get("onyomi"):
-                row("Onyomi", ", ".join(summary["onyomi"].split()))
-
-            if summary.get("kunyomi"):
-                row("Kunyomi", ", ".join(summary["kunyomi"].split()))
-
-            if summary.get("jlpt"):
-                row("JLPT", summary["jlpt"])
-
-            if summary.get("frequency"):
-                row("Frequency", summary["frequency"])
 
             if summary.get("keyword"):
-                row("Keyword", summary["keyword"])
+                keyword = summary["keyword"]
+                appendRow("Keyword", f"<span class='meaning-primary'>{keyword.strip()}</span>")
+
+            if summary.get("meaning"):
+                appendRow("Meaning" , summary["meaning"])
+
+            if summary.get("onyomi"):
+                appendRow("Onyomi", ", ".join(summary["onyomi"].split()))
+
+            if summary.get("kunyomi"):
+                appendRow("Kunyomi", ", ".join(summary["kunyomi"].split()))
+
+            if summary.get("jlpt"):
+                appendRow("JLPT", summary["jlpt"])
+
+            if summary.get("frequency"):
+                appendRow("Frequency", summary["frequency"])
 
             if summary.get("story1"):
-                row("Story 1", format_story("Story 1", summary["story1"], f"story1-{kanji}"))
+                appendRow("Story 1", format_story("Story 1", summary["story1"], f"story1-{kanji}"))
 
             if summary.get("story2"):
-                row("Story 2", format_story("Story 2", summary["story2"], f"story2-{kanji}"))
+                appendRow("Story 2", format_story("Story 2", summary["story2"], f"story2-{kanji}"))
 
 
 
@@ -191,7 +191,7 @@ def generate_kanji_details(
                 ruby = build_ruby(term, entry.get("reading", ""))
                 freq = entry.get("frequency", "N/A")
                 defs = entry.get("definitions", "").strip()
-                definition_html = f"<div class='definition'>{defs}</div>" if defs else ""
+                definition_html = f"<span class='kanji-popup-definition'>{defs}</span>" if defs else ""
 
                 # Extract kanji from term and add their meanings
                 term_kanji = [k for k in term if KANJI_RE.match(k)]
@@ -201,14 +201,15 @@ def generate_kanji_details(
                     summary = kanji_summary.get(k)
                     if summary:
                         meaning = summary.get("meaning", "").strip()
-                        if meaning:
-                            kanji_meaning_lines.append(f"<li><strong>{k}</strong>: {meaning}</li>")
+                        keyword = summary.get("keyword", "").strip()
+                        if keyword:
+                            kanji_meaning_lines.append(f"""<li><strong>{k}</strong> {keyword}<span class="kanji-details-meaning">; {meaning}</span></li>""")
 
                 kanji_details_html = ""
                 if kanji_meaning_lines:
                     details_id = f"details-{term}-{i}"
                     kanji_details_html = f"""
-                    <span class="kanji-details-toggle" onclick="document.getElementById('{details_id}').classList.toggle('hidden')">[+]</span>
+                    <span class="kanji-details-toggle" id="toggle-{details_id}" onclick="toggleKanjiDetails('{details_id}')">[+]</span>
                     <div id="{details_id}" class="kanji-details hidden">
                         <ul>
                             {''.join(kanji_meaning_lines)}
@@ -217,7 +218,7 @@ def generate_kanji_details(
                     """
 
                 # Now insert the [+] AFTER the frequency
-                lines.append(f"<li>{ruby} <small>({freq})</small> {kanji_details_html}{definition_html}</li>")
+                lines.append(f"""<li>{ruby} {definition_html}<small>({freq})</small> {kanji_details_html}</li>""")
 
             
             lines.append("</ul>")
@@ -235,9 +236,9 @@ def generate_kanji_details(
 
 
 def process_japanese_deck():
-    deck_name = "Mining"
-    field_expression = "Expression"
-    field_kanji_info = "KanjiInfo"
+    deck_name = deckToProcess
+    field_expression = expressionFieldName
+    field_kanji_info = destinationFieldName
 
     frequency_data = load_frequency_data()
     kanji_summary = load_kanji_summary()
@@ -290,11 +291,11 @@ def process_japanese_deck():
     finally:
         progress.finish()
 
-    showInfo(f"Updated {updated_count} notes with kanji frequency info.")
+    showInfo(f"Updated {updated_count} notes with kanji popup info.")
 
 
 
 # Add menu item
-action = QAction("Add Kanji Frequency Info", mw)
+action = QAction("Add Kanji Popup Info", mw)
 action.triggered.connect(process_japanese_deck)
 mw.form.menuTools.addAction(action)

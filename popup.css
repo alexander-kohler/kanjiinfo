@@ -954,6 +954,11 @@ ol
 
 /* --------------------------------------------------------- Kanji Info ---------------------------------- */
 
+@font-face {
+  font-family: "KanjiStrokeOrders";
+  src: url("_KanjiStrokeOrders.ttf");
+}
+
 /* === Kanji Popup Root Container === */
 .kanji-popup {
   position: relative;
@@ -981,7 +986,7 @@ ol
   top: 5%;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
+  width: 95%;
   max-width: 600px;
   max-height: 70vh;
   background: #222;
@@ -1031,7 +1036,25 @@ ol
 .kanji-popup h2 {
   margin-top: 0;
   font-size: 1.4em;
-  color: #ffcc66;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.stroke-order-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "KanjiStrokeOrders";
+  font-size: 12em;
+  background: #444;
+  color: #eee;
+  border: 1px solid #666;
+  padding: 0.5em 0.5em;
+  border-radius: 12px;
+  z-index: 1000;
+  text-align: center;
 }
 
 /* === Table Layout === */
@@ -1050,6 +1073,7 @@ ol
 .kanji-popup td.value {
   color: #eee;
   text-align: left;
+  width: 100%;
 }
 
 /* === Meaning Highlighting === */
@@ -1085,7 +1109,7 @@ ol
   font-size: 90%;
   margin-left: 0.3em;
 }
-.kanji-popup .definition {
+.kanji-popup-definition {
   font-size: 85%;
   color: #ccc;
   margin-top: 2px;
@@ -1095,6 +1119,7 @@ ol
 /* === Ruby Furigana Hover === */
 .kanji-popup ruby {
   ruby-position: over;
+  width: 2em;
 }
 .kanji-popup ruby rt {
   visibility: hidden;
@@ -1119,6 +1144,10 @@ ol
   margin-left: 0.5em;
   font-weight: bold;
   color: #555;
+}
+
+.kanji-details-meaning {
+  color: #8f8f8f;
 }
 
 /* === Story Toggle === */
