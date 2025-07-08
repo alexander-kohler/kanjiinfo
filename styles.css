@@ -1,0 +1,232 @@
+/* --------------------------------------------------------- Kanji Info ---------------------------------- */
+
+@font-face {
+  font-family: "KanjiStrokeOrders";
+  src: url("_KanjiStrokeOrders.ttf");
+}
+
+/* === Kanji Popup Root Container === */
+.kanji-popup {
+  position: relative;
+  z-index: 9999;
+  color: #eee;
+  font-size: 0.95em;
+  line-height: 1.5em;
+}
+
+/* === Clickable Kanji in Expression === */
+.kanji-popup .kanji-click {
+  cursor: pointer;
+  color: #fff;
+  font-size: 24px;
+  padding: 0 2px;
+  transition: background 0.2s;
+}
+.kanji-popup .kanji-click:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* === Popup Panel === */
+.kanji-popup .kanji-popup-content {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 600px;
+  max-height: 70vh;
+  background: #222;
+  border: 1px solid #555;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 10000;
+}
+
+/* === Scrollable Content === */
+.kanji-popup .popup-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1em;
+}
+
+/* === Sticky Footer (Close Button) === */
+.kanji-popup .popup-footer {
+  flex-shrink: 0;
+  background: #222;
+  border-top: 1px solid #444;
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  padding: 0.75em 1em;
+}
+.kanji-popup .popup-close {
+  padding: 0.5em 1.2em;
+  font-size: 1em;
+  background: #444;
+  color: #eee;
+  border: 1px solid #666;
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 80px;
+  appearance: none;
+  margin: 0;
+}
+.kanji-popup .popup-close:hover {
+  background: #666;
+}
+
+/* === Headline === */
+.kanji-popup h2 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.stroke-order-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "KanjiStrokeOrders";
+  font-size: 12em;
+  background: #444;
+  color: #eee;
+  border: 1px solid #666;
+  padding: 0.5em 0.5em;
+  border-radius: 12px;
+  z-index: 1000;
+  text-align: center;
+}
+
+/* === Table Layout === */
+.kanji-popup table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+.kanji-popup td.label {
+  color: #737373;
+  padding-right: 0.8em;
+  vertical-align: top;
+  white-space: nowrap;
+  text-align: right;
+}
+.kanji-popup td.value {
+  color: #eee;
+  text-align: left;
+  width: 100%;
+}
+
+/* === Meaning Highlighting === */
+.kanji-popup .meaning-primary {
+  font-weight: 600;
+  color: #eee;
+}
+.kanji-popup .meaning-secondary {
+  color: #bbb;
+  font-weight: 400;
+}
+
+/* === Word List === */
+.kanji-popup .word-separator {
+  border: none;
+  border-top: 1px solid #444;
+  margin: 1em 0 0.5em 0;
+}
+.kanji-popup ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5em 0;
+}
+.kanji-popup li {
+  margin-bottom: 0.8em;
+}
+.kanji-popup li > ruby {
+  font-size: 1.15em;
+  margin-right: 0.5em;
+}
+.kanji-popup small {
+  color: #737373;
+  font-size: 90%;
+  margin-left: 0.3em;
+}
+.kanji-popup-definition {
+  font-size: 85%;
+  color: #ccc;
+  margin-top: 2px;
+  margin-left: 0.5em;
+}
+
+/* === Ruby Furigana Hover === */
+.kanji-popup ruby {
+  ruby-position: over;
+  width: 2em;
+}
+.kanji-popup ruby rt {
+  visibility: hidden;
+  font-size: 60%;
+  color: #eee;
+}
+.kanji-popup ruby:hover rt {
+  visibility: visible;
+}
+
+/* === Kanji Meaning Details Toggle === */
+.kanji-popup .kanji-details {
+  margin-top: 0.3em;
+  font-size: 0.9em;
+  padding-left: 1em;
+}
+.kanji-popup .kanji-details.hidden {
+  display: none;
+}
+.kanji-popup .kanji-details-toggle {
+  cursor: pointer;
+  margin-left: 0.5em;
+  font-weight: bold;
+  color: #555;
+}
+
+.kanji-details-meaning {
+  color: #8f8f8f;
+}
+
+/* === Story Toggle === */
+.kanji-popup .story-container {
+  display: inline-block;
+  width: 100%;
+  margin-top: 0.25em;
+}
+.kanji-popup .story-header {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-weight: bold;
+  color: #ccc;
+  white-space: nowrap;
+}
+.kanji-popup .story-toggle {
+  width: 1em;
+  text-align: center;
+  display: inline-block;
+  font-weight: bold;
+  color: #ccc;
+}
+.kanji-popup .story-label {
+  font-weight: bold;
+  display: inline-block;
+}
+.kanji-popup .story-body {
+  margin: 0.4em 0 0 1.4em;
+  white-space: pre-wrap;
+  color: #bbb;
+}
+.kanji-popup .hidden {
+  display: none;
+}
