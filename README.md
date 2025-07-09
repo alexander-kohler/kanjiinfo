@@ -6,7 +6,11 @@
 
 ## Features
 
-<img src="/readme_images/IMG_6671%202.PNG" width=50%>
+RTK Keyword, other meanings, on- & kun-yomi, JLPT lvl, Kanji Frequency, two top kanji koohii stories, example words with frequency aswell as respective kanji keyword and meaning
+<img src="/readme_images/IMG_6671%202.PNG" width=40%>
+
+Kanji stroke order
+<img src="/readme_images/IMG_6672 2.PNG" width=40%>
 
 ## Setup
 
@@ -14,6 +18,7 @@
 - Add the contents from [Script](script.html) to the back card template.
 - Add KanjiInfo Field.
 - Add {{KanjiInfo}} to Back Card Template.
+- To get the stroke order you need to have the Kanji Stroke Order Font in your collection.media
 
 Change settings in config (Tools -> Add-ons -> kanjiinfo -> Config)
 
