@@ -1,1 +1,1 @@
-{"disabled": false, "mod": 0, "conflicts": [], "max_point_version": 0, "min_point_version": 0, "branch_index": 0, "update_enabled": true, "config": {"example_frequency_cutoff": 100000, "number_of_examples": 5}}
+{"disabled": false, "mod": 0, "conflicts": [], "max_point_version": 0, "min_point_version": 0, "branch_index": 0, "update_enabled": true, "config": {"deck_to_process": "Mining2", "destination_field_name": "KanjiInfo", "example_vocab_frequency_cutoff": 100000, "field_to_process": "Expression", "number_of_example_vocab": 5}}
