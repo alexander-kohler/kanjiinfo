@@ -4,6 +4,10 @@ Kanji Info Popup
 
 ## Features
 
+![](/readme_images/IMG_6671%202.PNG)
+![](/readme_images/IMG_6672%202.PNG)
+![](/readme_images/IMG_6673%202.PNG)
+
 ## Setup
 
 - Add the contents from [CSS](styles.css) to the styles template.
