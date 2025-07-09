@@ -3,7 +3,7 @@ from typing import TypedDict, Optional, Dict, List
 import csv
 import os
 import re
-
+from PyQt5.QtCore import QTimer
 from aqt import mw
 from aqt.qt import QAction
 from aqt.utils import showInfo
@@ -291,7 +291,7 @@ def process_japanese_deck():
     finally:
         progress.finish()
 
-    showInfo(f"Updated {updated_count} notes with kanji popup info.")
+    QTimer.singleShot(100, lambda: showInfo(f"Updated {updated_count} notes with kanji popup info."))
 
 
 
