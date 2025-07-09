@@ -6,11 +6,15 @@
 
 ## Features
 
-RTK Keyword, other meanings, on- & kun-yomi, JLPT lvl, Kanji Frequency, two top kanji koohii stories, example words with frequency aswell as respective kanji keyword and meaning
-<img src="/readme_images/IMG_6671%202.PNG" width=40%>
-
-Kanji stroke order
-<img src="/readme_images/IMG_6672 2.PNG" width=40%>
+- RTK Keyword
+- Other meanings
+- On- & kun-yomi
+- JLPT lvl
+- Kanji Frequency
+- two top kanji koohii stories
+- example words with frequency aswell as respective kanji keyword and meaning
+- Kanji stroke order
+  <img src="/readme_images/IMG_6671%202.PNG" width=40%><img src="/readme_images/IMG_6672 2.PNG" width=40%>
 
 ## Setup
 
