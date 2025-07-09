@@ -1,8 +1,8 @@
 # Kanji Info Popup
 
-[Features](#features)
-[Setup](#Setup)
-[Usage](#usage)
+- [Features](#features)
+- [Setup](#Setup)
+- [Usage](#usage)
 
 ## Features
 
