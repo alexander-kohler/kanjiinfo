@@ -3,7 +3,8 @@ from typing import TypedDict, Optional, Dict, List
 import csv
 import os
 import re
-from PyQt5.QtCore import QTimer
+from PyQt6.QtCore import QTimer
+
 from aqt import mw
 from aqt.qt import QAction
 from aqt.utils import showInfo
