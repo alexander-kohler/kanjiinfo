@@ -1,5 +1,9 @@
 Kanji Info Popup
 
+[Setup](#Setup)
+
+## Features
+
 ## Setup
 
 - Add the contents from [CSS](styles.css) to the styles template.
@@ -7,7 +11,7 @@ Kanji Info Popup
 - Add KanjiInfo Field.
 - Add {{KanjiInfo}} to Back Card Template.
 
-Change settings in config (Tools -> Add-ons -> kanjiinfo)
+Change settings in config (Tools -> Add-ons -> kanjiinfo -> Config)
 
 - "number_of_example_vocab": Number of example Vocab shown for each Kanji.
 - "example_vocab_frequency_cutoff": The Frequency up to which example Vocab is included.
