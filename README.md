@@ -1,9 +1,12 @@
-Kanji Info Popup
+# Kanji Info Popup
 
+[Features](#features)
 [Setup](#Setup)
+[Usage](#usage)
 
 ## Features
 
+<img src="/readme_images/IMG_6671%202.PNG" width=50% height=50%>
 ![](/readme_images/IMG_6671%202.PNG)
 ![](/readme_images/IMG_6672%202.PNG)
 ![](/readme_images/IMG_6673%202.PNG)
