@@ -15,7 +15,7 @@
 - example words with frequency aswell as respective kanji keyword and meaning
 - Kanji stroke order
 
-<img src="readme_gif.gif" width=40%>
+<img src="https://github.com/alexander-kohler/kanjiinfo/blob/main/readme_gif.gif?raw=true" width=40%>
 
 ## Setup
 
