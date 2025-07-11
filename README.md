@@ -15,12 +15,12 @@
 - example words with frequency aswell as respective kanji keyword and meaning
 - Kanji stroke order
 
-<img src="/readme_images/IMG_6671%202.PNG" width=40%><img src="/readme_images/IMG_6672 2.PNG" width=40%>
+<img src="readme_gif.gif" width=40%>
 
 ## Setup
 
-- Add the contents from [CSS](styles.css) to the styles template.
-- Add the contents from [Script](script.html) to the back card template.
+- Add the contents from [CSS](https://github.com/alexander-kohler/kanjiinfo/blob/main/styles.css) to the styles template.
+- Add the contents from [Script](https://github.com/alexander-kohler/kanjiinfo/blob/main/script.html) to the back card template.
 - Add KanjiInfo Field.
 - Add {{KanjiInfo}} to Back Card Template.
 - To get the stroke order you need to have the Kanji Stroke Order Font in your collection.media
